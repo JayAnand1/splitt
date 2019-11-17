@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "380627078285",
+    "firebase_url": "https://splitt-16541.firebaseio.com",
+    "project_id": "splitt-16541",
+    "storage_bucket": "splitt-16541.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380627078285:android:f62d924ae78cc4e91366c4",
+        "android_client_info": {
+          "package_name": "com.example.splitt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380627078285-jbi39vd5njna41r2chpji6qc703br94e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKiymmMUc7b0D4SWA7BUTNBGV6mpsmz3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380627078285-jbi39vd5njna41r2chpji6qc703br94e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
