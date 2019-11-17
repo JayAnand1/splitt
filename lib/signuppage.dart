@@ -277,19 +277,25 @@ class _SignUpPageState extends State<SignUpPage> {
             style: Theme.of(context).textTheme.button,
           ),
           onPressed: () async {
-            await fireStoreFunctions.createUser(
+            var check = await fireStoreFunctions.createUser(
                 firstName, lastName, username, email, password);
-            showDialog(context: context, builder: (BuildContext context) {
-              return  AlertDialog(
-                title: Text("Please verfiy email"),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text('Ok'),
-                    onPressed: () => Navigator.pop(context),
-                  )
-                ],
-              );
-            });
+            if (!check) {
+              print('--------------username exists');
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Please verfiy email"),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('Ok'),
+                          onPressed: () => Navigator.pop(context),
+                        )
+                      ],
+                    );
+                  });
+            }
           },
         ),
       ),

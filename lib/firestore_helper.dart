@@ -12,7 +12,7 @@ class FireStoreFunctions {
         .collection('Users')
         .where("Username", isEqualTo: "$username")
         .getDocuments();
-      print(query.documents);
+    print(query.documents);
     if (query.documents.isNotEmpty) {
       return true;
     } else {
@@ -26,6 +26,7 @@ class FireStoreFunctions {
         .user;
     try {
       if (user.isEmailVerified) {
+        print("user id ----> ${user.uid}");
         return true;
       }
     } catch (e) {
@@ -38,6 +39,7 @@ class FireStoreFunctions {
     var check = await checkUserExists(userName);
     if (check) {
       print('Username exists');
+      return false;
     } else {
       FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
               email: email, password: password))
@@ -50,13 +52,15 @@ class FireStoreFunctions {
         print("An error occured while trying to send email verification");
       }
 
-      await _db.collection('Users').add({
+      await _db.collection('Users').document(user.uid).setData({
         'First Name': '$firstName',
         'Last Name': '$lastName',
         'Username': '$userName',
         'Email': '$email',
+        'Uid': '${user.uid}'
       });
     }
+    return true;
   }
 
   _getDate() {
@@ -81,98 +85,161 @@ class FireStoreFunctions {
     return loggedInUser;
   }
 
-  sendFriendRequest(email) async {
-    FirebaseUser user = await getCurrentUser();
-    bool friendInList = false;
-
-    await _db
+  searchFriend(username) async {
+    var query = await _db
         .collection('Users')
-        .document(user.email)
-        .collection('Friends')
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
-        if (email == f.data["email"]) {
-          print("Friend already added");
-          friendInList = true;
-        }
-      });
-    });
+        .where("Username", isEqualTo: "$username")
+        .getDocuments();
 
-    if (friendInList == false) {
-      //send a request to user
-      await _db
-          .collection('Users')
-          .document(email)
-          .collection('FriendsRequests')
-          .add({
-        'To': '$email',
-        'From': '${user.email}',
-      });
+    if (query.documents.isNotEmpty) {
+      Friend newFriend = Friend(
+          firstName: query.documents.first.data["First Name"],
+          lastName: query.documents.first.data["Last Name"],
+          email: query.documents.first.data["Email"],
+          uID: query.documents.first.data["Uid"],
+          username: query.documents.first.data["Username"]);
+      return newFriend;
     } else {
-      return "friend added";
+      return false;
     }
   }
 
-  Future<List<Friend>> searchFriend(username) async {
-    List<Friend> friendList = List<Friend>();
+  myDetails() async {
+    final me = await _auth.currentUser();
+    Friend myProfile = Friend();
+    await _db
+        .collection('Users')
+        .document(me.uid)
+        .get()
+        .then((DocumentSnapshot ds) {
+      myProfile.firstName = ds.data["First Name"];
+      myProfile.lastName = ds.data["Last Name"];
+      myProfile.email = ds.data["Email"];
+      myProfile.uID = ds.data["Uid"];
+      myProfile.username = ds.data["Username"];
+    });
+    return myProfile;
+  }
+
+  addFriend(Friend user) async {
+    final myProfile = await myDetails();
+
+    bool requestSent = false;
 
     await _db
         .collection('Users')
-        .where("Full name == $username")
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
-        friendList.add(Friend(
-          username: f.data["username"],
-          fullName: f.data["Full name"],
-        ));
+        .document(myProfile.uID)
+        .collection('FriendRequests')
+        .document('Request sent to: ${user.username}')
+        .get()
+        .then((DocumentSnapshot ds) {
+      print("7878787878787878788");
+      print(ds.data);
+      if (ds.data != null) {
+        print(requestSent);
+        requestSent = true;
+      }
+    });
+
+    if (!requestSent) {
+      //put friend request in opposite party's friend request list
+      await _db
+          .collection('Users')
+          .document(user.uID)
+          .collection('FriendRequests')
+          .document('Request from: ${myProfile.username}')
+          .setData({
+        'First Name': '${myProfile.firstName}',
+        'Last Name': '${myProfile.lastName}',
+        'Username': '${myProfile.username}',
+        'Email': '${myProfile.email}',
+        'Uid': '${myProfile.uID}'
       });
-    });
 
-    return friendList;
+      //show us in our friend list that we have sent a request
+      await _db
+          .collection('Users')
+          .document(myProfile.uID)
+          .collection('FriendRequests')
+          .document('Request sent to: ${user.username}')
+          .setData({
+        'First Name': '${user.firstName}',
+        'Last Name': '${user.lastName}',
+        'Username': '${user.username}',
+        'Email': '${user.email}',
+        'Uid': '${user.uID}'
+      });
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  acceptFriendRequest(friendEmail, fullName) async {
-    FirebaseUser user = await getCurrentUser();
+  confirmRequest(Friend user) async {
+    final me = await _auth.currentUser();
+    final myProfile = await myDetails();
 
-    //add to your friend list
     await _db
         .collection('Users')
-        .document('${user.email}')
+        .document(me.uid)
         .collection('Friends')
-        .add({
-      'username': '$friendEmail',
-      'name': '$fullName',
+        .document(user.username)
+        .setData({
+      'First Name': '${user.firstName}',
+      'Last Name': '${user.lastName}',
+      'Username': '${user.username}',
+      'Email': '${user.email}',
+      'Uid': '${user.uID}'
     });
 
-    //add yourself to your new friend's friend list
     await _db
         .collection('Users')
-        .document('$friendEmail') // check what is being passed
+        .document(me.uid)
+        .collection('FriendRequests')
+        .document("Request from: ${user.username}")
+        .delete();
+
+    await _db
+        .collection('Users')
+        .document(user.uID)
         .collection('Friends')
-        .add({
-      'username': '${user.email}',
-      'name': ' ',
-      // your full name, need to have a profile for the user when they sign up so we can get full name, and other details
+        .document(myProfile.username)
+        .setData({
+      'First Name': '${myProfile.firstName}',
+      'Last Name': '${myProfile.lastName}',
+      'Username': '${myProfile.username}',
+      'Email': '${myProfile.email}',
+      'Uid': '${myProfile.uID}'
     });
+
+    await _db
+        .collection('Users')
+        .document(user.uID)
+        .collection('FriendRequests')
+        .document('Request sent to: ${myProfile.username}')
+        .delete();
+
+    return myProfile;
   }
 
-  Future<List<Friend>> getAllFriendRequests() async {
+  Future<List<Friend>> getFriendRequests() async {
     List<Friend> friendRequestList = List<Friend>();
 
     FirebaseUser loggedInUser = await getCurrentUser();
     if (loggedInUser != null) {
       await _db
           .collection('Users')
-          .document(loggedInUser.email)
+          .document(loggedInUser.uid)
           .collection('FriendRequests')
           .getDocuments()
           .then((QuerySnapshot snapshot) {
         snapshot.documents.forEach((f) {
           friendRequestList.add(Friend(
-            username: f.data["username"],
-            fullName: f.data["fullname"],
+            email: f.data["Email"],
+            firstName: f.data["First Name"],
+            lastName: f.data["Last Name"],
+            uID: f.data["Uid"],
+            username: f.data["Username"],
           ));
         });
       });
@@ -182,17 +249,73 @@ class FireStoreFunctions {
     return friendRequestList;
   }
 
-  void addFriend(userName, fullName) async {
-    FirebaseUser user = await getCurrentUser();
-    await _db
-        .collection('Users')
-        .document('${user.email}')
-        .collection('Friends')
-        .add({
-      'username': '$userName',
-      'name': '$fullName',
-    });
-  }
+//  Future<List<Friend>> searchFriend(username) async {
+//    List<Friend> friendList = List<Friend>();
+//
+//    await _db
+//        .collection('Users')
+//        .where("Full name == $username")
+//        .getDocuments()
+//        .then((QuerySnapshot snapshot) {
+//      snapshot.documents.forEach((f) {
+//        friendList.add(Friend(
+//          username: f.data["username"],
+//          fullName: f.data["Full name"],
+//        ));
+//      });
+//    });
+//
+//    return friendList;
+//  }
+//
+//  acceptFriendRequest(friendEmail, fullName) async {
+//    FirebaseUser user = await getCurrentUser();
+//
+//    //add to your friend list
+//    await _db
+//        .collection('Users')
+//        .document('${user.email}')
+//        .collection('Friends')
+//        .add({
+//      'username': '$friendEmail',
+//      'name': '$fullName',
+//    });
+//
+//    //add yourself to your new friend's friend list
+//    await _db
+//        .collection('Users')
+//        .document('$friendEmail') // check what is being passed
+//        .collection('Friends')
+//        .add({
+//      'username': '${user.email}',
+//      'name': ' ',
+//      // your full name, need to have a profile for the user when they sign up so we can get full name, and other details
+//    });
+//  }
+
+//  Future<List<Friend>> getAllFriendRequests() async {
+//    List<Friend> friendRequestList = List<Friend>();
+//
+//    FirebaseUser loggedInUser = await getCurrentUser();
+//    if (loggedInUser != null) {
+//      await _db
+//          .collection('Users')
+//          .document(loggedInUser.email)
+//          .collection('FriendRequests')
+//          .getDocuments()
+//          .then((QuerySnapshot snapshot) {
+//        snapshot.documents.forEach((f) {
+//          friendRequestList.add(Friend(
+//            username: f.data["username"],
+//            fullName: f.data["fullname"],
+//          ));
+//        });
+//      });
+//    } else {
+//      print("error retrieving");
+//    }
+//    return friendRequestList;
+//  }
 
   void newGroup(groupName, users) async {
     FirebaseUser user = await getCurrentUser();
@@ -252,29 +375,29 @@ class FireStoreFunctions {
     return transactionList;
   }
 
-  Future<List<Friend>> getAllFriends() async {
-    List<Friend> friendList = List<Friend>();
-
-    FirebaseUser loggedInUser = await getCurrentUser();
-    if (loggedInUser != null) {
-      await _db
-          .collection('Users')
-          .document(loggedInUser.email)
-          .collection('Friends')
-          .getDocuments()
-          .then((QuerySnapshot snapshot) {
-        snapshot.documents.forEach((f) {
-          friendList.add(Friend(
-            username: f.data["username"],
-            fullName: f.data["fullName"],
-          ));
-        });
-      });
-    } else {
-      print("error retrieving");
-    }
-    return friendList;
-  }
+//  Future<List<Friend>> getAllFriends() async {
+//    List<Friend> friendList = List<Friend>();
+//
+//    FirebaseUser loggedInUser = await getCurrentUser();
+//    if (loggedInUser != null) {
+//      await _db
+//          .collection('Users')
+//          .document(loggedInUser.email)
+//          .collection('Friends')
+//          .getDocuments()
+//          .then((QuerySnapshot snapshot) {
+//        snapshot.documents.forEach((f) {
+//          friendList.add(Friend(
+//            username: f.data["username"],
+//            fullName: f.data["fullName"],
+//          ));
+//        });
+//      });
+//    } else {
+//      print("error retrieving");
+//    }
+//    return friendList;
+//  }
 }
 
 class TransactionDetail {
@@ -288,7 +411,10 @@ class TransactionDetail {
 
 class Friend {
   String username;
-  String fullName;
+  String firstName;
+  String lastName;
+  String email;
+  String uID;
 
-  Friend({this.username, this.fullName});
+  Friend({this.username, this.firstName, this.lastName, this.email, this.uID});
 }
