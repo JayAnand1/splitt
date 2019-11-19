@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:splitt/create_group.dart';
 import 'firestore_helper.dart';
 import 'FriendRequests.dart';
 
@@ -89,15 +90,21 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 10.0),
             MaterialButton(
-              child: Text('Get friend list'),
+              child: Text('Get friend requests'),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => FriendRequests()));
 //                var friends = await fireStoreFunctions.getFriendRequests();
 //                print(friends[0].username);
               },
             ),
-            SizedBox(height: 2000),
-            Text('asdasd')
+            SizedBox(height: 20.0),
+            MaterialButton(
+              child: Text('Create Group'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroup()));
+              },
+            ),
+            SizedBox(height: 20.0),
           ],
         ),
       ),

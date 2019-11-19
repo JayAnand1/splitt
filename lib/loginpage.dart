@@ -21,14 +21,14 @@ class _LoginPageState extends State<LoginPage> {
   String email;
   String password;
 
-  Widget logoImage() {
-    return Image.asset(
-      'assets/images/logo.png',
-      height: 150,
-      width: 150,
-      colorBlendMode: BlendMode.colorDodge,
-    );
-  }
+//  Widget logoImage() {
+//    return Image.asset(
+//      'assets/images/logo.png',
+//      height: 150,
+//      width: 150,
+//      colorBlendMode: BlendMode.colorDodge,
+//    );
+//  }
 
   Widget emailTextField() {
     return TextField(
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: 50.0),
-            logoImage(),
+//            logoImage(),
             SizedBox(height: 50.0),
             emailTextField(),
             SizedBox(height: 10.0),

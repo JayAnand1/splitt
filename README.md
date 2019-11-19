@@ -14,9 +14,9 @@ A new Flutter application.
 - [X] Implement forgot Password
 
 - [ ] Groups
-  - [ ] Create Groups
-  - [ ] Add people to groups
-  - [ ] Create multiple groups
+  - [X] Create Groups
+  - [X] Add people to groups
+  - [X] Create multiple groups
   - [ ] Delete groups
   - [ ] Remove people from groups
 

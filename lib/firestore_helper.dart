@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uuid/uuid.dart';
 
 class FireStoreFunctions {
   final _auth = FirebaseAuth.instance;
@@ -21,16 +22,18 @@ class FireStoreFunctions {
   }
 
   Future<bool> logIn(email, password) async {
-    FirebaseUser user = (await _auth.signInWithEmailAndPassword(
-            email: email, password: password))
-        .user;
-    try {
-      if (user.isEmailVerified) {
-        print("user id ----> ${user.uid}");
-        return true;
+    if (password != null) {
+      FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+              email: email, password: password))
+          .user;
+      try {
+        if (user.isEmailVerified) {
+          print("user id ----> ${user.uid}");
+          return true;
+        }
+      } catch (e) {
+        print(e);
       }
-    } catch (e) {
-      print(e);
     }
     return false;
   }
@@ -249,6 +252,71 @@ class FireStoreFunctions {
     return friendRequestList;
   }
 
+  Future<List<Friend>> getFriends() async {
+    List<Friend> friendList = List<Friend>();
+
+    FirebaseUser loggedInUser = await getCurrentUser();
+    if (loggedInUser != null) {
+      await _db
+          .collection('Users')
+          .document(loggedInUser.uid)
+          .collection('Friends')
+          .getDocuments()
+          .then((QuerySnapshot snapshot) {
+        snapshot.documents.forEach((f) {
+          friendList.add(Friend(
+            email: f.data["Email"],
+            firstName: f.data["First Name"],
+            lastName: f.data["Last Name"],
+            uID: f.data["Uid"],
+            username: f.data["Username"],
+          ));
+        });
+      });
+    } else {
+      print("error retrieving");
+    }
+    return friendList;
+  }
+
+  createGroup(groupName, groupDescription, List<Friend> groupUsers) async {
+    print(groupDescription);
+
+    //full name, username
+//    GroupUser groupUser = GroupUser();
+
+    List<GroupUser> users = List<GroupUser>();
+
+
+
+    Uuid uuid = Uuid();
+    String groupID = uuid.v4();
+
+    print(groupID);
+
+    FirebaseUser user = await getCurrentUser();
+
+    await _db.collection('Groups').document('$groupID').setData({
+      'Group Name': '$groupName',
+      'Group Description': '$groupDescription',
+      'AdminID': '${user.uid}',
+      'GroupID': '$groupID'
+    });
+
+    for (int i = 0; i < groupUsers.length; i++) {
+
+      await _db
+          .collection('Groups')
+          .document('$groupID')
+          .collection('Users')
+          .document(groupUsers[i].uID)
+          .setData({
+        "Full Name": "${groupUsers[i].firstName + " " + groupUsers[i].lastName}",
+        "Username" : "${groupUsers[i].username}",
+      });
+    }
+  }
+
 //  Future<List<Friend>> searchFriend(username) async {
 //    List<Friend> friendList = List<Friend>();
 //
@@ -417,4 +485,11 @@ class Friend {
   String uID;
 
   Friend({this.username, this.firstName, this.lastName, this.email, this.uID});
+}
+
+class GroupUser {
+  String fullName;
+  String username;
+
+  GroupUser({this.fullName, this.username});
 }
