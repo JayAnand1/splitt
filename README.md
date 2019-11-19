@@ -2,6 +2,41 @@
 
 A new Flutter application.
 
+# Todo List -
+
+- [ ] Friends
+  - [X] Search
+  - [X] Add
+  - [ ] Delete
+  - [ ] Print friend list in a list tile
+  
+- [ ] Sign up page confirm password textfield needs to be added
+- [ ] Implement forgot Password
+
+- [ ] Groups
+  - [ ] Create Groups
+  - [ ] Add people to groups
+  - [ ] Create multiple groups
+  - [ ] Delete groups
+  - [ ] Remove people from groups
+
+- [ ] Group messaging
+  
+- [ ] Add transactions
+  - [ ] Add Pic of the receipt (Optional)
+
+- [ ] Login page loading animation
+- [ ] Add transaction floating buttion transition animation
+- [ ] Menu sliding to the right
+- [ ] Styling and formating of the entire app
+
+
+- [ ] Logo
+- [ ] Name
+- [ ] App Icon
+- [ ] Website (optional)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
@@ -15,6 +50,3 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-- [x] Finish my changes
-- [ ] Push my commits to GitHub
-- [ ] Open a pull request
