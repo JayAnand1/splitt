@@ -1,4 +1,5 @@
 import 'package:splitt/firestore_helper.dart';
+import 'package:splitt/password_reset.dart';
 
 import 'privacypolicypage.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,11 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget forgotPassword() {
     return FlatButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PasswordReset(),),);
+      },
       child: Text('Forgot Password', style: TextStyle(color: Colors.white)),
     );
   }
