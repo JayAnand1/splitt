@@ -31,7 +31,7 @@ A new Flutter application.
 - [ ] Menu sliding to the right
 - [ ] Styling and formating of the entire app
 
-
+- [ ] Change the body of the confirm email and reset password emails sent
 - [ ] Logo
 - [ ] Name
 - [ ] App Icon
