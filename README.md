@@ -25,6 +25,7 @@ A new Flutter application.
 - [ ] Add transactions
   - [ ] Add Pic of the receipt (Optional)
 
+- [ ] Add profile pic
 - [ ] Login page loading animation
 - [ ] Add transaction floating buttion transition animation
 - [ ] Menu sliding to the right
