@@ -11,7 +11,7 @@ A new Flutter application.
   - [ ] Print friend list in a list tile
   
 - [ ] Sign up page confirm password textfield needs to be added
-- [ ] Implement forgot Password
+- [X] Implement forgot Password
 
 - [ ] Groups
   - [ ] Create Groups
