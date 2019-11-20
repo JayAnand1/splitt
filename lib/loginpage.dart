@@ -181,3 +181,103 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+//
+//Container(height: MediaQuery.of(context).size.height,
+//
+//padding: EdgeInsets.all(8.0),
+//color: Color(0xff4a4a58),
+//child: ListView(
+//
+//children: <Widget>[
+//SizedBox(height: 50),
+//Container(
+//
+//height: 100,
+//width: 100,
+//decoration: new BoxDecoration(
+//
+//shape: BoxShape.circle,
+//image: new DecorationImage(
+//fit: BoxFit.scaleDown,
+//image: ExactAssetImage('assets/images/new.png'),
+//),
+//),
+//),
+//SizedBox(height: 30),
+//Container(
+//child: Center(
+//child: Text(
+//'Harith Wickramasigha',
+//style: TextStyle(color: Colors.white, fontSize: 22),
+//),
+//),
+//),
+//SizedBox(height: 10),
+//Container(
+//child: Center(
+//child: Text(
+//'@harithsen',
+//style: TextStyle(color: Colors.white, fontSize: 18),
+//),
+//),
+//),
+//Divider(
+//thickness: 1,
+//endIndent: 35,
+//indent: 35,
+//height: 50,
+//color: Colors.white,
+//),
+//ListTile(
+//leading: Icon(
+//Icons.group_add,
+//size: 30,
+//color: Colors.white,
+//),
+//title: Text(
+//'Create Group',
+//style: TextStyle(fontSize: 18, color: Colors.white),
+//),
+//),
+//ListTile(
+//leading: Icon(
+//Icons.group_add,
+//size: 30,
+//color: Colors.white,
+//),
+//title: Text(
+//'Create Group',
+//style: TextStyle(fontSize: 18, color: Colors.white),
+//),
+//),ListTile(
+//leading: Icon(
+//Icons.group_add,
+//size: 30,
+//color: Colors.white,
+//),
+//title: Text(
+//'Create Group',
+//style: TextStyle(fontSize: 18, color: Colors.white),
+//),
+//),Container(
+//// This align moves the children to the bottom
+//child: Align(
+//alignment: FractionalOffset.bottomCenter,
+//// This container holds all the children that will be aligned
+//// on the bottom and should not scroll with the above ListView
+//child: Container(
+//child: Column(
+//children: <Widget>[
+//Divider(),
+//ListTile(
+//leading: Icon(Icons.settings),
+//title: Text('Settings')),
+//ListTile(
+//leading: Icon(Icons.help),
+//title: Text('Help and Feedback'))
+//],
+//)
+//)
+//)
+//)
