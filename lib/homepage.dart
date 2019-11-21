@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:splitt/add_friends.dart';
 import 'package:splitt/add_transaction.dart';
 import 'package:splitt/create_group.dart';
+import 'package:splitt/my_groups.dart';
 import 'package:splitt/settings.dart';
 import 'firestore_helper.dart';
 import 'FriendRequests.dart';
@@ -191,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text('Search User'),
                   onPressed: () async {
                     returnedUser = await fireStoreFunctions.searchFriend(user);
-                    if (returnedUser) {
+                    if (returnedUser != null) { //fix searchFriend func
                       print(returnedUser.email);
                       addFriendDialogBox(
                           'Username ${returnedUser.username} Found',
@@ -255,6 +256,25 @@ class _HomePageState extends State<HomePage> {
                   ),
                   title: Text(
                     'Create Group',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyGroups(),
+                      ),
+                    );
+                  },
+                  leading: Icon(
+                    Icons.group,
+                    size: 30,
+                  ),
+                  title: Text(
+                    'My Groups',
                     style: TextStyle(fontSize: 18),
                   ),
                   trailing: Icon(Icons.keyboard_arrow_right),

@@ -21,6 +21,32 @@ class FireStoreFunctions {
     }
   }
 
+  Future fetchMyGroups() async {
+    FirebaseUser user = await getCurrentUser();
+
+    List<Group> myGroupsList = List<Group>();
+
+    await _db
+        .collection('Users')
+        .document(user.uid)
+        .collection('Groups')
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        myGroupsList.add(Group(
+          groupID: f.data["GroupID"],
+          groupName: f.data["Group Name"],
+        ));
+      });
+    });
+
+    if (myGroupsList != null) {
+      return myGroupsList;
+    } else {
+      return false;
+    }
+  }
+
   Future<bool> logIn(email, password) async {
     if (password != null) {
       FirebaseUser user = (await _auth.signInWithEmailAndPassword(
@@ -285,9 +311,7 @@ class FireStoreFunctions {
     //full name, username
 //    GroupUser groupUser = GroupUser();
 
-    List<GroupUser> users = List<GroupUser>();
-
-
+    //List<GroupUser> users = List<GroupUser>();
 
     Uuid uuid = Uuid();
     String groupID = uuid.v4();
@@ -304,17 +328,29 @@ class FireStoreFunctions {
     });
 
     for (int i = 0; i < groupUsers.length; i++) {
-
       await _db
           .collection('Groups')
           .document('$groupID')
           .collection('Users')
           .document(groupUsers[i].uID)
           .setData({
-        "Full Name": "${groupUsers[i].firstName + " " + groupUsers[i].lastName}",
-        "Username" : "${groupUsers[i].username}",
+        "Full Name":
+            "${groupUsers[i].firstName + " " + groupUsers[i].lastName}",
+        "Username": "${groupUsers[i].username}",
+        "UserID" : "${groupUsers[i].uID}"
       });
     }
+
+    await _db
+        .collection('Users')
+        .document('${user.uid}')
+        .collection('Groups')
+        .document('$groupID')
+        .setData({
+      "Group Name": "$groupName",
+      "GroupID": "$groupID",
+      "Group Size" : "${groupUsers.length}"
+    });
   }
 
 //  Future<List<Friend>> searchFriend(username) async {
@@ -416,7 +452,8 @@ class FireStoreFunctions {
       return false;
     }
   }
-  void addTransaction(amount, description, groupName, userName) async {
+
+  void addTransaction(amount, description, groupName, userName, groupID) async {
     var date = _getDate();
     FirebaseUser user = await getCurrentUser();
 
@@ -433,6 +470,19 @@ class FireStoreFunctions {
       'description': '$description',
       'groupName': '$groupName',
     });
+
+    await _db
+        .collection('Group')
+        .document('${getUser.uid}')
+        .collection('Transactions')
+        .add({
+      'amount': '$amount',
+      'date': '$date',
+      'description': '$description',
+      'groupName': '$groupName',
+    });
+
+
   }
 
   Future<List<TransactionDetail>> getTransactions() async {
@@ -464,29 +514,28 @@ class FireStoreFunctions {
     return transactionList;
   }
 
-//  Future<List<Friend>> getAllFriends() async {
-//    List<Friend> friendList = List<Friend>();
-//
-//    FirebaseUser loggedInUser = await getCurrentUser();
-//    if (loggedInUser != null) {
-//      await _db
-//          .collection('Users')
-//          .document(loggedInUser.email)
-//          .collection('Friends')
-//          .getDocuments()
-//          .then((QuerySnapshot snapshot) {
-//        snapshot.documents.forEach((f) {
-//          friendList.add(Friend(
-//            username: f.data["username"],
-//            fullName: f.data["fullName"],
-//          ));
-//        });
-//      });
-//    } else {
-//      print("error retrieving");
-//    }
-//    return friendList;
-//  }
+  getGroupUsers(groupID) async {
+
+    List<GroupUser> users = List<GroupUser>();
+    FirebaseUser user = await getCurrentUser();
+
+    await _db.collection('Groups').document(groupID).collection('Users').getDocuments().then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f){
+        users.add(GroupUser(
+          fullName: f.data["Full Name"],
+          username: f.data["Username"],
+          userID: f.data["UserID"],
+        ));
+      });
+    });
+    if(users.length > 0) {
+      return users;
+    } else {
+      return null;
+    }
+  }
+
+
 }
 
 class TransactionDetail {
@@ -511,6 +560,14 @@ class Friend {
 class GroupUser {
   String fullName;
   String username;
+  String userID;
 
-  GroupUser({this.fullName, this.username});
+  GroupUser({this.fullName, this.username, this.userID});
+}
+
+class Group {
+  String groupName;
+  String groupID;
+
+  Group({this.groupName, this.groupID});
 }
