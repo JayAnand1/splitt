@@ -1,13 +1,9 @@
 import 'package:splitt/firestore_helper.dart';
 import 'package:splitt/password_reset.dart';
 
-import 'privacypolicypage.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
 import 'homepage.dart';
 import 'signuppage.dart';
-import 'privacypolicypage.dart';
 
 class LoginPage extends StatefulWidget {
   @override

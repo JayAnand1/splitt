@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'firestore_helper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -6,6 +8,15 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  FireStoreFunctions fireStoreFunctions = FireStoreFunctions();
+
+  getMyDetails() async {
+    Friend myProfile = await fireStoreFunctions.myDetails();
+    return myProfile;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +42,7 @@ class _SettingsState extends State<Settings> {
                   //Container(
                   Center(
                     child: Text(
-                      'Harith Wickramasingha',
+                      'F.Name L.Name',
                       style: TextStyle(fontSize: 25),
                     ),
                   ),
@@ -39,7 +50,7 @@ class _SettingsState extends State<Settings> {
                   Container(
                     child: Center(
                       child: Text(
-                        '@harithsen',
+                        '@username',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),

@@ -33,7 +33,6 @@ class _CreateGroupState extends State<CreateGroup> {
               },
               child: Text('Close'),
             ),
-
           ],
         );
       },
@@ -41,6 +40,8 @@ class _CreateGroupState extends State<CreateGroup> {
   }
 
   Widget friends() {
+    bool _isPressed = true;
+
     return Expanded(
       child: FutureBuilder(
         future: getFriends(),
@@ -63,7 +64,14 @@ class _CreateGroupState extends State<CreateGroup> {
                     child: Icon(
                       Icons.add,
                       size: 30,
+                      //color: (_isPressed) ? Color(0xff007397) : Colors.red,
                     ),
+                    onPressed: () {
+                      friendList.add(snapShot.data[index]);
+//                      setState(() {
+//                        _isPressed = true;
+//                      });
+                    },
                   ),
                   title: Text(
                     snapShot.data[index].firstName +
@@ -82,7 +90,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     ),
                   ),
                   onTap: () {
-                    friendList.add(snapShot.data[index]);
+                    //friendList.add(snapShot.data[index]);
                   },
                 ),
               );
@@ -209,8 +217,8 @@ class _CreateGroupState extends State<CreateGroup> {
           onPressed: () async {
             await fireStoreFunctions.createGroup(
                 groupName, groupDescription, friendList);
-          creatGroupDialogBox();
-            },
+            creatGroupDialogBox();
+          },
         ),
       ),
     );

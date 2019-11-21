@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:splitt/add_friends.dart';
+import 'package:splitt/add_transaction.dart';
 import 'package:splitt/create_group.dart';
 import 'package:splitt/settings.dart';
 import 'firestore_helper.dart';
 import 'FriendRequests.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -115,7 +115,8 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: Text('If you have any feedback feel free to contact us.\n\nCopyright © 2019 Quick Notes.\nAll rights reserved.'),
+          title: Text(
+              'If you have any feedback feel free to contact us.\n\nCopyright © 2019 Quick Notes.\nAll rights reserved.'),
           actions: <Widget>[
             FlatButton(
               onPressed: () {
@@ -281,7 +282,8 @@ class _HomePageState extends State<HomePage> {
                           'Settings',
                           style: TextStyle(fontSize: 16),
                         ),
-                        onTap: () {
+                        onTap: () async {
+                          //Friend myProfile = await fireStoreFunctions.myDetails();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -312,16 +314,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool isPressed = false;
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff4a4a58),
+
         title: Center(
           child: Text(
             'asdsadad',
             style: TextStyle(color: Colors.white),
           ),
         ),
-
         iconTheme: IconThemeData(color: Colors.white),
       ),
       drawer: appDrawer(),
@@ -331,20 +337,38 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             SizedBox(height: 200),
             SizedBox(height: 10.0),
-            MaterialButton(
+            MaterialButton(color: (isPressed) ? Colors.black87 : Colors.yellow,
+
               child: Text('Test My profile'),
               onPressed: () async {
                 Friend myProfile = await fireStoreFunctions.myDetails();
-                customDialogBox('F Name: ${myProfile.firstName}\n L Name: ${myProfile.lastName}\nEmail: ${myProfile.email}\n Username: ${myProfile.username}\n');
+                customDialogBox(
+                    'F Name: ${myProfile.firstName}\n L Name: ${myProfile.lastName}\nEmail: ${myProfile.email}\n Username: ${myProfile.username}\n');
 
                 print(myProfile.email);
               },
             ),
             SizedBox(height: 10.0),
-            Center(child: Text('Home boi swipe right', style: TextStyle(fontSize: 20),)),
+            Center(
+                child: Text(
+              'swipe right on the screen',
+              style: TextStyle(fontSize: 20),
+            )),
             SizedBox(height: 20.0),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        elevation: 20,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddTransaction(),
+            ),
+          );
+        },
       ),
     );
   }

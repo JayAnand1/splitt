@@ -398,13 +398,34 @@ class FireStoreFunctions {
         .add(members);
   }
 
+  searchFriendID(username) async {
+    var query = await _db
+        .collection('Users')
+        .where("Username", isEqualTo: "$username")
+        .getDocuments();
+
+    if (query.documents.isNotEmpty) {
+      Friend newFriend = Friend(
+          firstName: query.documents.first.data["First Name"],
+          lastName: query.documents.first.data["Last Name"],
+          email: query.documents.first.data["Email"],
+          uID: query.documents.first.data["Uid"],
+          username: query.documents.first.data["Username"]);
+      return newFriend;
+    } else {
+      return false;
+    }
+  }
   void addTransaction(amount, description, groupName, userName) async {
     var date = _getDate();
     FirebaseUser user = await getCurrentUser();
 
+    FirebaseUser getUser = await searchFriend(userName);
+    print(getUser.uid);
+
     await _db
         .collection('Users')
-        .document('${user.email}')
+        .document('${getUser.uid}')
         .collection('Transactions')
         .add({
       'amount': '$amount',

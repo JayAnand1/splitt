@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'firestore_helper.dart';
+import 'package:flutter/cupertino.dart';
 
 class AddTransaction extends StatefulWidget {
   @override
@@ -9,6 +10,25 @@ class AddTransaction extends StatefulWidget {
 }
 
 class _AddTransactionState extends State<AddTransaction> {
+
+  void customDialogBox(String dialogMessage) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text(dialogMessage),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   var amount;
   var description;
@@ -20,10 +40,11 @@ class _AddTransactionState extends State<AddTransaction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text('Add Transactions'),),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
+          padding: EdgeInsets.all(8.0),
           child: Column(children: <Widget>[
             TextField(
               onChanged: (value) {
@@ -48,11 +69,12 @@ class _AddTransactionState extends State<AddTransaction> {
               decoration: InputDecoration(
                 hintText: "Enter user name",
               ),
-            ),
+            ),SizedBox(height: 40),
             MaterialButton(
               child: Text("Add transaction"),
               onPressed: () {
               fireStoreFunctions.addTransaction(amount, description, groupName, userName);
+              customDialogBox('Transaction Recorded');
               },
             ),
             MaterialButton(
