@@ -1,6 +1,5 @@
 import 'package:splitt/firestore_helper.dart';
 import 'package:splitt/password_reset.dart';
-
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'signuppage.dart';
@@ -11,29 +10,39 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   FireStoreFunctions fireStoreFunctions = FireStoreFunctions();
 
   String email;
   String password;
 
-//  Widget logoImage() {
+  Widget logoImage() {
 //    return Image.asset(
 //      'assets/images/logo.png',
 //      height: 150,
 //      width: 150,
 //      colorBlendMode: BlendMode.colorDodge,
 //    );
-//  }
+
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Text(
+        'SPLITT',
+        style: TextStyle(
+            fontSize: 70, fontFamily: 'deadpack', color: Colors.white),
+      ),
+    );
+  }
 
   Widget emailTextField() {
     return TextField(
       obscureText: false,
       style: TextStyle(
-        fontSize: 20, color: Colors.white,
+        fontSize: 20,
+        color: Colors.white,
       ),
       decoration: InputDecoration(
-          labelText: 'EMAIL', labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          labelText: 'EMAIL',
+          labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(0),
             borderSide: BorderSide(
@@ -65,10 +74,12 @@ class _LoginPageState extends State<LoginPage> {
     return TextField(
       obscureText: true,
       style: TextStyle(
-        fontSize: 20, color: Colors.white,
+        fontSize: 20,
+        color: Colors.white,
       ),
       decoration: InputDecoration(
-          labelText: 'PASSWORD', labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          labelText: 'PASSWORD',
+          labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(0),
             borderSide: BorderSide(
@@ -111,12 +122,13 @@ class _LoginPageState extends State<LoginPage> {
         ),
         onPressed: () async {
           bool result = await fireStoreFunctions.logIn(email, password);
-          if(result){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          if (result) {
+            //Friend myProfile = await fireStoreFunctions.myDetails();
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
           } else {
             print("You have not verified your email");
           }
-
         },
       ),
     );
@@ -126,8 +138,11 @@ class _LoginPageState extends State<LoginPage> {
     return FlatButton(
       onPressed: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PasswordReset(),),);
+          context,
+          MaterialPageRoute(
+            builder: (context) => PasswordReset(),
+          ),
+        );
       },
       child: Text('Forgot Password', style: TextStyle(color: Colors.white)),
     );
@@ -150,28 +165,44 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Container(
-        //color: Color(0xffE74C3C),
-        padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: 50.0),
-//            logoImage(),
-            SizedBox(height: 50.0),
-            emailTextField(),
-            SizedBox(height: 10.0),
-            passwordTextField(),
-            SizedBox(height: 50.0),
-            loginButton(),
-            SizedBox(height: 20.0),
-            forgotPassword(),
-            SizedBox(height: 10.0),
-            signUpButtonLoginPage(),
-//              signUpButton(),
+    return Container(
+      padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0.1, 0.9],
+          colors: [
+            Color(0xff485563),
+            Color(0xff29323c),
           ],
+        ),
+      ),
+      child: Scaffold(
+        //resizeToAvoidBottomPadding: false,
+        body: SingleChildScrollView(
+          child: Container(
+            //color: Color(0xffE74C3C),
+
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: MediaQuery.of(context).size.height/5 - 10),
+                logoImage(),
+                SizedBox(height: 100.0),
+                emailTextField(),
+                SizedBox(height: 10.0),
+                passwordTextField(),
+                SizedBox(height: 50.0),
+                loginButton(),
+                SizedBox(height: 20.0),
+                forgotPassword(),
+                SizedBox(height: 10.0),
+                signUpButtonLoginPage(),
+//              signUpButton(),
+              ],
+            ),
+          ),
         ),
       ),
     );

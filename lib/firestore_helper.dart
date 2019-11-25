@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 
 class FireStoreFunctions {
   final _auth = FirebaseAuth.instance;
@@ -49,8 +51,14 @@ class FireStoreFunctions {
 
   Future<bool> logIn(email, password) async {
     if (password != null) {
+
+      SpinKitThreeBounce(
+        color: Colors.white,
+        size: 20.0,
+      );
+
       FirebaseUser user = (await _auth.signInWithEmailAndPassword(
-              email: email, password: password))
+          email: email, password: password))
           .user;
       try {
         if (user.isEmailVerified) {
@@ -71,7 +79,7 @@ class FireStoreFunctions {
       return false;
     } else {
       FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
-              email: email, password: password))
+          email: email, password: password))
           .user;
 
       try {
@@ -95,8 +103,14 @@ class FireStoreFunctions {
   _getDate() {
     var now = new DateTime.now();
     var date;
-    date = new DateTime(now.year, now.month, now.day, now.hour, now.minute,
-        now.second, now.millisecond);
+    date = new DateTime(
+        now.year,
+        now.month,
+        now.day,
+        now.hour,
+        now.minute,
+        now.second,
+        now.millisecond);
     return date;
   }
 
@@ -335,9 +349,9 @@ class FireStoreFunctions {
           .document(groupUsers[i].uID)
           .setData({
         "Full Name":
-            "${groupUsers[i].firstName + " " + groupUsers[i].lastName}",
+        "${groupUsers[i].firstName + " " + groupUsers[i].lastName}",
         "Username": "${groupUsers[i].username}",
-        "UserID" : "${groupUsers[i].uID}"
+        "UserID": "${groupUsers[i].uID}"
       });
     }
 
@@ -349,7 +363,7 @@ class FireStoreFunctions {
         .setData({
       "Group Name": "$groupName",
       "GroupID": "$groupID",
-      "Group Size" : "${groupUsers.length}"
+      "Group Size": "${groupUsers.length}"
     });
   }
 
@@ -481,8 +495,6 @@ class FireStoreFunctions {
       'description': '$description',
       'groupName': '$groupName',
     });
-
-
   }
 
   Future<List<TransactionDetail>> getTransactions() async {
@@ -515,12 +527,16 @@ class FireStoreFunctions {
   }
 
   getGroupUsers(groupID) async {
-
     List<GroupUser> users = List<GroupUser>();
     FirebaseUser user = await getCurrentUser();
 
-    await _db.collection('Groups').document(groupID).collection('Users').getDocuments().then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f){
+    await _db
+        .collection('Groups')
+        .document(groupID)
+        .collection('Users')
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
         users.add(GroupUser(
           fullName: f.data["Full Name"],
           username: f.data["Username"],
@@ -528,14 +544,12 @@ class FireStoreFunctions {
         ));
       });
     });
-    if(users.length > 0) {
+    if (users.length > 0) {
       return users;
     } else {
       return null;
     }
   }
-
-
 }
 
 class TransactionDetail {

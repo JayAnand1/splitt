@@ -22,8 +22,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget customAppBarSignUpPage() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(width: 0, color: Colors.white),
-        color: Colors.white,
+        //border: Border.all(width: 0, color: Colors.white),
+        //color: Colors.white,
       ),
       child: SafeArea(
         child: Row(
@@ -31,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             FlatButton(
-              child: Icon(Icons.arrow_back, color: Colors.black87, size: 30),
+              child: Icon(Icons.arrow_back, color: Colors.white, size: 30),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -44,12 +44,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget signUpHeading() {
     return Container(
-        decoration: BoxDecoration(
-            border: Border.all(width: 0, color: Colors.white),
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                bottomLeft: const Radius.circular(40.0),
-                bottomRight: const Radius.circular(40.0))),
+//        decoration: BoxDecoration(
+//          //border: Border.all(width: 0, color: Colors.white),
+//          //color: Colors.white,
+//          borderRadius: BorderRadius.only(
+//            bottomLeft: const Radius.circular(40.0),
+//            bottomRight: const Radius.circular(40.0),
+//          ),
+//        ),
         child: Center(
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
@@ -58,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87),
+                  color: Colors.white),
             ),
           ),
         ));
@@ -317,18 +319,31 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: Column(
-          children: <Widget>[
-            customAppBarSignUpPage(),
-            signUpHeading(),
-            SizedBox(height: 50),
-            signUpPageBody(),
-            signUpButtonSignUpPage(),
-            SizedBox(height: 20),
-            privacyPolicy(),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0.1, 0.9],
+          colors: [
+            Color(0xff485563),
+            Color(0xff29323c),
           ],
+        ),
+      ),
+      child: Scaffold(
+        //resizeToAvoidBottomPadding: false,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              customAppBarSignUpPage(),
+              signUpHeading(),
+              SizedBox(height: 50),
+              signUpPageBody(),
+              signUpButtonSignUpPage(),
+              SizedBox(height: 20),
+              privacyPolicy(),
+            ],
+          ),
         ),
       ),
     );

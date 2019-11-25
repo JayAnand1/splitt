@@ -51,76 +51,90 @@ class _AddTransactionState extends State<AddTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Transactions'),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0.1, 0.9],
+          colors: [
+            Color(0xff485563),
+            Color(0xff29323c),
+          ],
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              TextField(
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  totalAmount = value;
-                  calculateSplitAmount();
-                },
-                decoration: InputDecoration(
-                  hintText: "Enter Amount",
+      child: Scaffold(
+
+        appBar: AppBar(
+          title: Text('Add Transactions'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    totalAmount = value;
+                    calculateSplitAmount();
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Enter Amount",
+                  ),
                 ),
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  yourShare = value;
-                  calculateSplitAmount();
-                },
-                decoration: InputDecoration(
-                  hintText: "Your Share",
+                TextField(
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    yourShare = value;
+                    calculateSplitAmount();
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Your Share",
+                  ),
                 ),
-              ),
-              TextField(
-                onChanged: (value) {
-                  description = value;
-                },
-                decoration: InputDecoration(
-                  hintText: "Description",
+                TextField(
+                  onChanged: (value) {
+                    description = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Description",
+                  ),
                 ),
-              ),
-              SizedBox(height: 40),
-              MaterialButton(
-                child: Text("Split Equally"),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SplitEqual(
-                                totalAmount: totalAmount,
-                                yourShare: yourShare,
-                                description: description,
-                                groupAmountPayable: groupAmountPayable,
-                                selectedGroup: widget.selectedGroup,
-                              )));
-                },
-              ),
-              MaterialButton(
-                child: Text("Select Users"),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SplitUnequally(
-                                totalAmount: totalAmount,
-                                yourShare: yourShare,
-                                description: description,
-                                groupAmountPayable: groupAmountPayable,
-                                selectedGroup: widget.selectedGroup,
-                              )));
-                },
-              ),
-            ],
+                SizedBox(height: 40),
+                MaterialButton(
+                  child: Text("Split Equally"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SplitEqual(
+                                  totalAmount: totalAmount,
+                                  yourShare: yourShare,
+                                  description: description,
+                                  groupAmountPayable: groupAmountPayable,
+                                  selectedGroup: widget.selectedGroup,
+                                )));
+                  },
+                ),
+                MaterialButton(
+                  child: Text("Select Users"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SplitUnequally(
+                                  totalAmount: totalAmount,
+                                  yourShare: yourShare,
+                                  description: description,
+                                  groupAmountPayable: groupAmountPayable,
+                                  selectedGroup: widget.selectedGroup,
+                                )));
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

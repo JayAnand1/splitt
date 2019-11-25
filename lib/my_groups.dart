@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:splitt/firestore_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:splitt/selected_group.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+//REDUNDAND PAGE. IS USED IN HOME PAGE
 
 class MyGroups extends StatefulWidget {
   @override
@@ -17,7 +19,10 @@ class _MyGroupsState extends State<MyGroups> {
         if (snapShot.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
           return Container(
-            child: Text('Loading'),
+            child:  SpinKitThreeBounce(
+              color: Colors.white,
+              size: 20.0,
+            ),
           );
         }
         return ListView.builder(

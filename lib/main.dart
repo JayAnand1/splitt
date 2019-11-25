@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         accentColor: Colors.white,
         buttonColor: Colors.white,
-        scaffoldBackgroundColor: Color(0xffE74C3C),
+          //0xffE74C3C
+        scaffoldBackgroundColor: Colors.transparent,
         hintColor: Colors.white,
         textSelectionColor: Colors.white,
         textTheme: TextTheme(
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
               fontSize: 20.0, fontFamily: 'Hind', color: Colors.white),
         ),
         buttonTheme: ButtonThemeData(padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-          buttonColor: Colors.black,
+          buttonColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0),),
           ),

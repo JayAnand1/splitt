@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'firestore_helper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CreateGroup extends StatefulWidget {
   @override
@@ -49,7 +50,10 @@ class _CreateGroupState extends State<CreateGroup> {
           if (snapShot.data == null) {
             //print('project snapshot data is: ${projectSnap.data}');
             return Container(
-              child: Text('Loading'),
+              child: SpinKitThreeBounce(
+                color: Colors.white,
+                size: 20.0,
+              ),
             );
           }
           return ListView.builder(
@@ -61,11 +65,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 child: ListTile(
                   leading: Image.asset('assets/images/new2.png'),
                   trailing: FlatButton(
-                    child: Icon(
-                      Icons.add,
-                      size: 30,
-                      //color: (_isPressed) ? Color(0xff007397) : Colors.red,
-                    ),
+                    child: Icon(Icons.add),
                     onPressed: () {
                       friendList.add(snapShot.data[index]);
 //                      setState(() {
@@ -104,7 +104,7 @@ class _CreateGroupState extends State<CreateGroup> {
   Widget createGroupBody() {
     return Center(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
         child: Column(
           children: <Widget>[
             TextField(
@@ -116,6 +116,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 fontSize: 20,
                 color: Colors.white,
               ),
+              maxLength: 20,
               decoration: InputDecoration(
                   labelText: 'Group name',
                   labelStyle:
@@ -143,7 +144,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     padding: EdgeInsets.only(left: 30, right: 10),
                   )),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 5),
             TextField(
               onChanged: (value) {
                 groupDescription = value;
@@ -183,15 +184,15 @@ class _CreateGroupState extends State<CreateGroup> {
             Align(
               alignment: Alignment.topLeft,
               child: Container(
-                padding: EdgeInsets.fromLTRB(0, 30, 0, 10),
+                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                 child: Text(
-                  'Friends List',
-                  style: TextStyle(fontSize: 22),
+                  'Add Friends To Group',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
-            ),
-            Divider(
-              thickness: 2,
             ),
           ],
         ),
@@ -224,19 +225,63 @@ class _CreateGroupState extends State<CreateGroup> {
     );
   }
 
+  Widget customAppBar() {
+    return Container(
+      decoration: BoxDecoration(
+          //border: Border.all(width: 0, color: Colors.white),
+          //color: Colors.white,
+          ),
+      child: SafeArea(
+        child: Row(
+          //mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            FlatButton(
+              child: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                'Create Group',
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text('Create Group'),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0.1, 0.9],
+          colors: [
+            Color(0xff485563),
+            Color(0xff29323c),
+          ],
+        ),
       ),
-      body: Column(
-        children: <Widget>[
-          createGroupBody(),
-          friends(),
-          createGroupButton(),
-        ],
+      child: Scaffold(
+        resizeToAvoidBottomPadding: false,
+//        appBar: AppBar(
+//          title: Text('Create Group'),
+//        ),
+        body: Column(
+          children: <Widget>[
+            customAppBar(),
+            createGroupBody(),
+            friends(),
+            createGroupButton(),
+          ],
+        ),
       ),
     );
   }

@@ -32,6 +32,7 @@ dependencies:
   flutter_html: ^0.11.0
   uuid: ^2.0.4
   url_launcher: ^5.2.5
+  flutter_spinkit: "^2.1.0"
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +48,14 @@ dev_dependencies:
 flutter:
   assets:
   - assets/images/
+
+  fonts:
+      - family: Deadpack
+        fonts:
+        - asset: assets/fonts/deadpack.ttf
+      - family: Gisbon
+        fonts:
+        - asset: assets/fonts/gisbon.ttf
 
 
   # The following line ensures that the Material Icons font is
