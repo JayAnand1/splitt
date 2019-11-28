@@ -13,6 +13,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Expense',
       theme: ThemeData(
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
+        primaryIconTheme: IconThemeData(color: Colors.white,),
+        accentIconTheme: IconThemeData(color: Colors.white,),
+        cardColor: Colors.white,
         primaryColor: Colors.white,
         accentColor: Colors.white,
         buttonColor: Colors.white,

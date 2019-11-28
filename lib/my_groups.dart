@@ -3,6 +3,7 @@ import 'package:splitt/firestore_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:splitt/selected_group.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:splitt/styling.dart';
 
 //REDUNDAND PAGE. IS USED IN HOME PAGE
 
@@ -19,10 +20,7 @@ class _MyGroupsState extends State<MyGroups> {
         if (snapShot.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
           return Container(
-            child:  SpinKitThreeBounce(
-              color: Colors.white,
-              size: 20.0,
-            ),
+            child:  loadingAnimation,
           );
         }
         return ListView.builder(

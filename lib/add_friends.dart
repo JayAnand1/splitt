@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'firestore_helper.dart';
 import 'package:flutter/cupertino.dart';
 
+// REDUNDANT PAGE
+
 class AddFriends extends StatefulWidget {
   @override
   _AddFriendsState createState() => _AddFriendsState();

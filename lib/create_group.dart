@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:splitt/styling.dart';
 import 'firestore_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'styling.dart';
 
 class CreateGroup extends StatefulWidget {
   @override
@@ -21,7 +23,7 @@ class _CreateGroupState extends State<CreateGroup> {
     return friendList;
   }
 
-  void creatGroupDialogBox() {
+  void createGroupDialogBox() {
     showDialog(
       context: context,
       builder: (context) {
@@ -50,22 +52,21 @@ class _CreateGroupState extends State<CreateGroup> {
           if (snapShot.data == null) {
             //print('project snapshot data is: ${projectSnap.data}');
             return Container(
-              child: SpinKitThreeBounce(
-                color: Colors.white,
-                size: 20.0,
-              ),
+              child: loadingAnimation,
             );
           }
           return ListView.builder(
             itemCount: snapShot.data.length,
             itemBuilder: (context, index) {
               return Card(
-                margin: EdgeInsets.all(8.0),
-                elevation: 20,
+                margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                color: Colors.transparent,
+                //elevation: 20,
                 child: ListTile(
+                  contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                   leading: Image.asset('assets/images/new2.png'),
                   trailing: FlatButton(
-                    child: Icon(Icons.add),
+                    child: Icon(Icons.add, color: Colors.white),
                     onPressed: () {
                       friendList.add(snapShot.data[index]);
 //                      setState(() {
@@ -79,15 +80,12 @@ class _CreateGroupState extends State<CreateGroup> {
                         snapShot.data[index].lastName,
                     style: TextStyle(
                         fontSize: 20,
-                        color: Colors.black87,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      '\@' + snapShot.data[index].username,
-                      style: TextStyle(fontSize: 16, color: Colors.black87),
-                    ),
+                  subtitle: Text(
+                    '\@' + snapShot.data[index].username,
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   onTap: () {
                     //friendList.add(snapShot.data[index]);
@@ -136,10 +134,9 @@ class _CreateGroupState extends State<CreateGroup> {
                     ),
                   ),
                   prefixIcon: Padding(
-                    child: IconTheme(
-                      data:
-                          IconThemeData(color: Theme.of(context).primaryColor),
-                      child: Icon(Icons.account_circle),
+                    child: Icon(
+                      Icons.account_circle,
+                      color: Colors.white,
                     ),
                     padding: EdgeInsets.only(left: 30, right: 10),
                   )),
@@ -218,7 +215,7 @@ class _CreateGroupState extends State<CreateGroup> {
           onPressed: () async {
             await fireStoreFunctions.createGroup(
                 groupName, groupDescription, friendList);
-            creatGroupDialogBox();
+            createGroupDialogBox();
           },
         ),
       ),
@@ -237,7 +234,11 @@ class _CreateGroupState extends State<CreateGroup> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             FlatButton(
-              child: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+              child: Icon(
+                Icons.arrow_back,
+                size: 30,
+                color: Colors.white,
+              ),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -246,7 +247,10 @@ class _CreateGroupState extends State<CreateGroup> {
               alignment: Alignment.centerRight,
               child: Text(
                 'Create Group',
-                style: TextStyle(color: Colors.white, fontSize: 22),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold),
               ),
             )
           ],
