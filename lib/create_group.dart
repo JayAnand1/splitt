@@ -63,6 +63,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 color: Colors.transparent,
                 //elevation: 20,
                 child: ListTile(
+                  dense: true,
                   contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                   leading: Image.asset('assets/images/new2.png'),
                   trailing: FlatButton(

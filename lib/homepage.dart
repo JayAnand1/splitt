@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context) {
         return CupertinoAlertDialog(
           title: Text(
-              'If you have any feedback feel free to contact us.\n\nCopyright © 2019 Quick Notes.\nAll rights reserved.'),
+              'If you have any feedback feel free to contact us.\n\nCopyright © 2019 Splitt.\nAll rights reserved.'),
           actions: <Widget>[
             FlatButton(
               onPressed: () {
@@ -163,12 +163,154 @@ class _HomePageState extends State<HomePage> {
           );
         }
         return ListView.builder(
-          shrinkWrap: true,
-          primary: false,
+            //scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            primary: false,
+
 //          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
 //              crossAxisCount: 1, childAspectRatio: 3),
-          itemCount: snapShot.data.length,
-          itemBuilder: (context, index) {
+            itemCount: snapShot.data.length,
+            itemBuilder: (context, index) {
+              //return Container(
+//                margin: EdgeInsets.all(8),
+//                padding: EdgeInsets.all(16),
+//                //height: MediaQuery.of(context).size.height,
+//                width: MediaQuery.of(context).size.width / 1.5,
+//                color: Colors.blueGrey,
+//                child: Column(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    Text(
+//                      '\$ 10,000.00',
+//                      //textAlign: TextAlign.center,
+//                      style: TextStyle(
+//                        fontSize: 25,
+//                        color: Colors.white,
+//                        fontWeight: FontWeight.bold,
+//                      ),
+//                    ),SizedBox(height: 40,),
+//                    Text(
+//                      snapShot.data[index].groupName,
+//                      //textAlign: TextAlign.center,
+//                      style: TextStyle(
+//                        fontSize: 25,
+//                        color: Colors.white,
+//                        fontWeight: FontWeight.bold,
+//                      ),
+//                    ),
+//
+//                    SingleChildScrollView(
+//                      scrollDirection: Axis.horizontal,
+//                      child: Row(
+//                        children: <Widget>[
+//                          //Positioned(child: ,),
+//
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                          ),
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.scripturaengage.com/wp-content/uploads/2017/03/Profile-Picture-Erik-Vanherck-Circle.png"),
+//                          ),
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.scripturaengage.com/wp-content/uploads/2017/05/Profile-Picture-Pauline-Suy-circle-ScripturaEngage.png"),
+//                          ),
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                          ),
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                          ),
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                          ),
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              );
+
+              //);
+
+//                Card(
+//                color: Colors.red,
+//                child: Container(
+//                  height: 100,
+//                  width: MediaQuery.of(context).size.width / 1.5,
+//                  color: Colors.red,
+//                  child: ListTile(
+//                    //contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+//                    title: Padding(
+//                      padding: const EdgeInsets.all(8.0),
+//                      child: Text(
+//                        snapShot.data[index].groupName,
+//                        //textAlign: TextAlign.center,
+//                        style: TextStyle(
+//                          fontSize: 20,
+//                          color: Colors.white,
+//                          fontWeight: FontWeight.bold,
+//                        ),
+//                      ),
+//                    ),
+//
+//                    subtitle: SingleChildScrollView(
+//                      scrollDirection: Axis.horizontal,
+//                      padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+//                      child: Stack(
+//                        children: <Widget>[
+//                          Row(
+//                            children: <Widget>[
+//                              //Positioned(child: ,),
+//
+//                              CircleAvatar(
+//                                backgroundImage: NetworkImage(
+//                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                              ),
+//                              CircleAvatar(
+//                                backgroundImage: NetworkImage(
+//                                    "https://www.scripturaengage.com/wp-content/uploads/2017/03/Profile-Picture-Erik-Vanherck-Circle.png"),
+//                              ),
+//                              CircleAvatar(
+//                                backgroundImage: NetworkImage(
+//                                    "https://www.scripturaengage.com/wp-content/uploads/2017/05/Profile-Picture-Pauline-Suy-circle-ScripturaEngage.png"),
+//                              ),
+//                              CircleAvatar(
+//                                backgroundImage: NetworkImage(
+//                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                              ),
+//                              CircleAvatar(
+//                                backgroundImage: NetworkImage(
+//                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                              ),
+//                              CircleAvatar(
+//                                backgroundImage: NetworkImage(
+//                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                              ),CircleAvatar(
+//                                backgroundImage: NetworkImage(
+//                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                              ),
+//
+//                            ],
+//                          ),
+//                          // Image.asset('assets/images/new2.png'),
+//                          // Image.asset('assets/images/new2.png'),
+//                        ],
+//                      ),
+//                    ),
+//                  ),
+//                ),
+//              );
+
             return Card(
               color: Colors.transparent,
               //color: Color(0xff0ABFBC),
@@ -252,7 +394,8 @@ class _HomePageState extends State<HomePage> {
 //                ),
               ),
             );
-          },
+            },
+
         );
       },
     );
@@ -775,12 +918,11 @@ class _HomePageState extends State<HomePage> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: RawMaterialButton(
-
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
                     "https://www.skylightsearch.co.uk/wp-content/uploads/2017/01/Hadie-profile-pic-circle.png"),
               ),
-              onPressed: (){
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -858,6 +1000,7 @@ class _HomePageState extends State<HomePage> {
         drawer: appDrawer(),
         body: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               topScrollableMenu(),
               hiddenSearchBar(),
@@ -870,3 +1013,255 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+//Widget groups() {
+//  return FutureBuilder(
+//    future: fireStoreFunctions.fetchMyGroups(),
+//    builder: (context, snapShot) {
+//      if (snapShot.data == null) {
+//        //print('project snapshot data is: ${projectSnap.data}');
+//        return Container(
+//          child: loadingAnimation,
+//        );
+//      }
+//      return SizedBox(
+//        height: 200,
+//        child: ListView.builder(
+//          //scrollDirection: Axis.horizontal,
+//          shrinkWrap: true,
+//          primary: false,
+//
+////          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+////              crossAxisCount: 1, childAspectRatio: 3),
+//          itemCount: snapShot.data.length,
+//          itemBuilder: (context, index) {
+//            //return Container(
+////                margin: EdgeInsets.all(8),
+////                padding: EdgeInsets.all(16),
+////                //height: MediaQuery.of(context).size.height,
+////                width: MediaQuery.of(context).size.width / 1.5,
+////                color: Colors.blueGrey,
+////                child: Column(
+////                  mainAxisAlignment: MainAxisAlignment.center,
+////                  children: <Widget>[
+////                    Text(
+////                      '\$ 10,000.00',
+////                      //textAlign: TextAlign.center,
+////                      style: TextStyle(
+////                        fontSize: 25,
+////                        color: Colors.white,
+////                        fontWeight: FontWeight.bold,
+////                      ),
+////                    ),SizedBox(height: 40,),
+////                    Text(
+////                      snapShot.data[index].groupName,
+////                      //textAlign: TextAlign.center,
+////                      style: TextStyle(
+////                        fontSize: 25,
+////                        color: Colors.white,
+////                        fontWeight: FontWeight.bold,
+////                      ),
+////                    ),
+////
+////                    SingleChildScrollView(
+////                      scrollDirection: Axis.horizontal,
+////                      child: Row(
+////                        children: <Widget>[
+////                          //Positioned(child: ,),
+////
+////                          CircleAvatar(
+////                            backgroundImage: NetworkImage(
+////                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                          ),
+////                          CircleAvatar(
+////                            backgroundImage: NetworkImage(
+////                                "https://www.scripturaengage.com/wp-content/uploads/2017/03/Profile-Picture-Erik-Vanherck-Circle.png"),
+////                          ),
+////                          CircleAvatar(
+////                            backgroundImage: NetworkImage(
+////                                "https://www.scripturaengage.com/wp-content/uploads/2017/05/Profile-Picture-Pauline-Suy-circle-ScripturaEngage.png"),
+////                          ),
+////                          CircleAvatar(
+////                            backgroundImage: NetworkImage(
+////                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                          ),
+////                          CircleAvatar(
+////                            backgroundImage: NetworkImage(
+////                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                          ),
+////                          CircleAvatar(
+////                            backgroundImage: NetworkImage(
+////                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                          ),
+////                          CircleAvatar(
+////                            backgroundImage: NetworkImage(
+////                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                          ),
+////                        ],
+////                      ),
+////                    ),
+////                  ],
+////                ),
+////              );
+//
+//            //);
+//
+////                Card(
+////                color: Colors.red,
+////                child: Container(
+////                  height: 100,
+////                  width: MediaQuery.of(context).size.width / 1.5,
+////                  color: Colors.red,
+////                  child: ListTile(
+////                    //contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+////                    title: Padding(
+////                      padding: const EdgeInsets.all(8.0),
+////                      child: Text(
+////                        snapShot.data[index].groupName,
+////                        //textAlign: TextAlign.center,
+////                        style: TextStyle(
+////                          fontSize: 20,
+////                          color: Colors.white,
+////                          fontWeight: FontWeight.bold,
+////                        ),
+////                      ),
+////                    ),
+////
+////                    subtitle: SingleChildScrollView(
+////                      scrollDirection: Axis.horizontal,
+////                      padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+////                      child: Stack(
+////                        children: <Widget>[
+////                          Row(
+////                            children: <Widget>[
+////                              //Positioned(child: ,),
+////
+////                              CircleAvatar(
+////                                backgroundImage: NetworkImage(
+////                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                              ),
+////                              CircleAvatar(
+////                                backgroundImage: NetworkImage(
+////                                    "https://www.scripturaengage.com/wp-content/uploads/2017/03/Profile-Picture-Erik-Vanherck-Circle.png"),
+////                              ),
+////                              CircleAvatar(
+////                                backgroundImage: NetworkImage(
+////                                    "https://www.scripturaengage.com/wp-content/uploads/2017/05/Profile-Picture-Pauline-Suy-circle-ScripturaEngage.png"),
+////                              ),
+////                              CircleAvatar(
+////                                backgroundImage: NetworkImage(
+////                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                              ),
+////                              CircleAvatar(
+////                                backgroundImage: NetworkImage(
+////                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                              ),
+////                              CircleAvatar(
+////                                backgroundImage: NetworkImage(
+////                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                              ),CircleAvatar(
+////                                backgroundImage: NetworkImage(
+////                                    "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+////                              ),
+////
+////                            ],
+////                          ),
+////                          // Image.asset('assets/images/new2.png'),
+////                          // Image.asset('assets/images/new2.png'),
+////                        ],
+////                      ),
+////                    ),
+////                  ),
+////                ),
+////              );
+//
+//            return Card(
+//              color: Colors.transparent,
+//              //color: Color(0xff0ABFBC),
+//              margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
+//              //elevation: 20,
+//              child: ListTile(
+//                //contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+//                title: Padding(
+//                  padding: const EdgeInsets.all(8.0),
+//                  child: Text(
+//                    snapShot.data[index].groupName,
+//                    //textAlign: TextAlign.center,
+//                    style: TextStyle(
+//                      fontSize: 20,
+//                      color: Colors.white,
+//                      fontWeight: FontWeight.bold,
+//                    ),
+//                  ),
+//                ),
+//                leading: Image.asset('assets/images/new2.png'),
+//                subtitle: SingleChildScrollView(
+//                  scrollDirection: Axis.horizontal,
+//                  padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+//                  child: Stack(
+//                    children: <Widget>[
+//                      Row(
+//                        children: <Widget>[
+//                          //Positioned(child: ,),
+//
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.pngfind.com/pngs/m/488-4887957_facebook-teerasej-profile-ball-circle-circular-profile-picture.png"),
+//                          ),
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.scripturaengage.com/wp-content/uploads/2017/03/Profile-Picture-Erik-Vanherck-Circle.png"),
+//                          ),
+//                          CircleAvatar(
+//                            backgroundImage: NetworkImage(
+//                                "https://www.scripturaengage.com/wp-content/uploads/2017/05/Profile-Picture-Pauline-Suy-circle-ScripturaEngage.png"),
+//                          ),
+//                        ],
+//                      ),
+//
+//                      // Image.asset('assets/images/new2.png'),
+//                      // Image.asset('assets/images/new2.png'),
+//                    ],
+//                  ),
+//                ),
+//
+////                Text(
+////                  snapShot.data[index].groupID,
+////                  style: TextStyle(color: Colors.grey),
+////                ),
+//                trailing: Container(
+//                  //color: Colors.yellow,
+//                  padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+//                  child: Text(
+//                    '\$ 100.00',
+//                    style: TextStyle(fontSize: 20, color: Colors.greenAccent),
+//                  ),
+//                ),
+//
+//                onTap: () async {
+//                  //push to new screen for specific group
+//                  Navigator.push(
+//                    context,
+//                    MaterialPageRoute(
+//                      builder: (context) => SelectedGroup(
+//                        selectedGroup: snapShot.data[index],
+//                      ),
+//                    ),
+//                  );
+//                },
+////                subtitle: Padding(
+////                  padding: const EdgeInsets.all(8.0),
+////                  child: Text(
+////                    '\@' + snapShot.data[index].groupID,
+////                    style: TextStyle(fontSize: 16, color: Colors.black87),
+////                  ),
+////                ),
+//              ),
+//            );
+//          },
+//        ),
+//      );
+//    },
+//  );
+//}

@@ -57,6 +57,13 @@ class _SettingsState extends State<Settings> {
                 Navigator.pop(context);
               },
             ),
+            Text(
+              'Settings',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold),
+            ),
             FlatButton(
               child: Icon(Icons.info_outline, color: Colors.white, size: 30),
               onPressed: () {
@@ -76,7 +83,7 @@ class _SettingsState extends State<Settings> {
       builder: (context) {
         return CupertinoAlertDialog(
           title: Text(
-              'If you have any feedback feel free to contact us.\n\nCopyright © 2019 Quick Notes.\nAll rights reserved.'),
+              'If you have any feedback feel free to contact us.\n\nCopyright © 2019 Splitt.\nAll rights reserved.'),
           actions: <Widget>[
             FlatButton(
               onPressed: () {
@@ -124,156 +131,140 @@ class _SettingsState extends State<Settings> {
       child: Scaffold(
         //appBar: AppBar(),
         body: SingleChildScrollView(
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              //getMyDetails(),
-              customAppBar(),
-              Container(
-                height: 190,
-                width: 190,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image:
-                          new NetworkImage("https://i.imgur.com/BoN9kdC.png")),
+          scrollDirection: Axis.vertical,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: ListView(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                //getMyDetails(),
+                customAppBar(),
+
+                SizedBox(height: 40),
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: new NetworkImage(
+                            "https://www.scripturaengage.com/wp-content/uploads/2017/05/Profile-Picture-Pauline-Suy-circle-ScripturaEngage.png")),
+                  ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: Text(
-                  'Harith Wickramasingha',
-                  style: TextStyle(fontSize: 25, color: Colors.white),
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.fromLTRB(16, 30, 16, 8),
+                  child: Text(
+                    'Harith Wickramasingha',
+                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
-                child: Text(
-                  '@harithsen',
-                  style: TextStyle(fontSize: 22, color: Colors.white),
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                  child: Text(
+                    '@harithsen',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
                 ),
-              ),
-              Divider(
-                color: Colors.white,
-                thickness: 1,
-                endIndent: 30,
-                indent: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
+                SizedBox(height: 30),
+
+                Card(
+                  color: Colors.transparent,
+                  margin: EdgeInsets.all(8),
+                  child: ListTile(
+                    dense: true,
+                    title: Text(
                       'Default Currency',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.white,
-                    ),
-                  ],
+                    leading: Icon(Icons.monetization_on,
+                        color: Colors.white, size: 25),
+                    trailing: Icon(Icons.arrow_forward,
+                        color: Colors.white, size: 25),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
+                Card(
+                  color: Colors.transparent,
+                  margin: EdgeInsets.all(8),
+                  child: ListTile(
+                    dense: true,
+                    title: Text(
                       'Background Color',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.white,
-                    ),
-                  ],
+                    leading:
+                        Icon(Icons.color_lens, color: Colors.white, size: 25),
+                    trailing: Icon(Icons.arrow_forward,
+                        color: Colors.white, size: 25),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'CURRENCY',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
+                Card(
+                  color: Colors.transparent,
+                  margin: EdgeInsets.all(8),
+                  child: ListTile(
+                    dense: true,
+                    title: Text(
                       'Remove Advertisements',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                    Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                    ),
-                  ],
+                    leading: Icon(Icons.remove_circle_outline,
+                        color: Colors.white, size: 25),
+                    trailing: Icon(Icons.arrow_forward,
+                        color: Colors.white, size: 25),
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                child: Text(
-                  'V 1.001',
-                  style: Theme.of(context).textTheme.button,
+
+                SizedBox(height: 40),
+                SizedBox(
+                  child: Text(
+                    'V 1.001',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              FlatButton(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.help,
-                      size: 26,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 20),
-                    Text(
-                      'Help and Feedback',
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  ],
+                FlatButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.help,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Help and Feedback',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {helpDialogBox();},
                 ),
-                onPressed: () {helpDialogBox();},
-              ),
-              FlatButton(
-                //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0),),),
-//                  shape: RoundedRectangleBorder(
-//                    side: BorderSide(
-//                        color: Colors.white, width: 2, style: BorderStyle.solid),
-//                    borderRadius: BorderRadius.circular(0),
-//                  ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.exit_to_app,
-                      size: 26,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 20),
-                    Text(
-                      'Logout',
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  ],
+                FlatButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.exit_to_app,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Logout',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {},
                 ),
-                onPressed: () {},
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -6,13 +6,12 @@ class SettledTransactions extends StatefulWidget {
 }
 
 class _SettledTransactionsState extends State<SettledTransactions> {
-
   Widget customAppBar() {
     return Container(
       decoration: BoxDecoration(
-        //border: Border.all(width: 0, color: Colors.white),
-        //color: Colors.white,
-      ),
+          //border: Border.all(width: 0, color: Colors.white),
+          //color: Colors.white,
+          ),
       child: SafeArea(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -57,8 +56,43 @@ class _SettledTransactionsState extends State<SettledTransactions> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              customAppBar()
+              customAppBar(),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Expanded(
+                    child: SizedBox( height: 100,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          Container(
+                            width: 160.0,
+                            color: Colors.red,
+                          ),
+                          Container(
+                            width: 160.0,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            width: 160.0,
+                            color: Colors.green,
+                          ),
+                          Container(
+                            width: 160.0,
+                            color: Colors.yellow,
+                          ),
+                          Container(
+                            width: 160.0,
+                            color: Colors.orange,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
